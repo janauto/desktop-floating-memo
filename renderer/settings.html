@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>控制中心</title>
+  <link rel="stylesheet" href="settings.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="settingsApp">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <div class="mac-buttons">
+          <div class="mac-btn close" id="btnClose"></div>
+          <div class="mac-btn min"></div>
+          <div class="mac-btn max" id="btnMax"></div>
+        </div>
+        <span class="header-title">🎯 控制中心</span>
+      </div>
+    </div>
+
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="nav-item active" data-page="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">看板分析</span>
+        </div>
+        <div class="nav-item" data-page="global">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">全局设置</span>
+        </div>
+        <div class="nav-item" data-page="personal">
+          <span class="nav-icon">🎨</span>
+          <span class="nav-label">个性化</span>
+        </div>
+        <div class="nav-item" data-page="terminal">
+          <span class="nav-icon">💻</span>
+          <span class="nav-label">终端</span>
+        </div>
+      </nav>
+
+      <!-- Content Area -->
+      <div class="content-area" id="contentArea">
+        <!-- Pages will be rendered dynamically by settings.js -->
+      </div>
+    </div>
+  </div>
+  <script src="quotes.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

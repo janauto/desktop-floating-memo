@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浮窗备忘录</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Title Bar (draggable) -->
+    <div id="titlebar">
+      <div class="titlebar-left">
+        <span class="app-icon">🎯</span>
+        <span class="app-title">浮窗备忘录</span>
+        <span class="clock" id="liveClock">00:00:00</span>
+      </div>
+      <div class="titlebar-right">
+        <div class="level-badge" id="levelBadge">Lv.1</div>
+        <button class="btn-icon" id="btnSettings" title="控制终端">⚙</button>
+        <button class="btn-minimize" id="btnCollapse" title="折叠">─</button>
+      </div>
+    </div>
+
+    <!-- XP Bar -->
+    <div id="xpBarContainer">
+      <div id="xpBar">
+        <div id="xpFill"></div>
+      </div>
+      <span id="xpText">0 / 100 XP</span>
+    </div>
+
+    <!-- Combo Display -->
+    <div id="comboDisplay" class="hidden">
+      <span id="comboCount">2x</span>
+      <span id="comboLabel">COMBO!</span>
+    </div>
+
+    <!-- Stats Row -->
+    <div id="statsRow">
+      <div class="stat-item">
+        <span class="stat-value" id="statTotal">0</span>
+        <span class="stat-label">已打掉</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="statToday">0</span>
+        <span class="stat-label">今日</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="statStreak">0</span>
+        <span class="stat-label">连击</span>
+      </div>
+    </div>
+
+    <!-- Pomodoro Timer -->
+    <div id="pomodoroSection" class="pomodoro-section">
+      <div class="pomodoro-header">
+        <div class="pomodoro-tabs">
+          <button class="pomo-tab active" data-mode="work">🎯 专注</button>
+          <button class="pomo-tab" data-mode="shortBreak">☕ 短休</button>
+          <button class="pomo-tab" data-mode="longBreak">🌙 长休</button>
+        </div>
+        <button class="pomo-toggle-btn" id="pomoToggleBtn" title="收起/展开">▾</button>
+      </div>
+      <div class="pomodoro-body" id="pomoBody">
+        <div class="pomo-ring-container">
+          <svg class="pomo-ring" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="pomoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#8b5cf6" />
+                <stop offset="50%" style="stop-color:#6366f1" />
+                <stop offset="100%" style="stop-color:#22d3ee" />
+              </linearGradient>
+              <linearGradient id="pomoGradBreak" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#34d399" />
+                <stop offset="50%" style="stop-color:#22d3ee" />
+                <stop offset="100%" style="stop-color:#6366f1" />
+              </linearGradient>
+              <filter id="pomoGlow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <circle class="pomo-ring-bg" cx="60" cy="60" r="52" />
+            <circle class="pomo-ring-progress" id="pomoRingProgress" cx="60" cy="60" r="52" filter="url(#pomoGlow)" />
+          </svg>
+          <div class="pomo-time-display">
+            <span class="pomo-time" id="pomoTime">25:00</span>
+            <span class="pomo-mode-label" id="pomoModeLabel">专注模式</span>
+          </div>
+        </div>
+        <div class="pomo-controls">
+          <button class="pomo-btn pomo-btn-reset" id="pomoResetBtn" title="重置">⟲</button>
+          <button class="pomo-btn pomo-btn-main" id="pomoStartBtn" title="开始">
+            <span class="pomo-btn-icon" id="pomoStartIcon">▶</span>
+          </button>
+          <button class="pomo-btn pomo-btn-skip" id="pomoSkipBtn" title="跳过">⏭</button>
+        </div>
+        <div class="pomo-session-info">
+          <div class="pomo-sessions" id="pomoSessions">
+            <span class="pomo-dot completed"></span>
+            <span class="pomo-dot"></span>
+            <span class="pomo-dot"></span>
+            <span class="pomo-dot"></span>
+          </div>
+          <span class="pomo-session-text" id="pomoSessionText">第 1/4 轮</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote Area -->
+    <div id="quoteArea" class="quote-area">
+      <span id="quoteText" class="quote-text">载入中...</span>
+      <span id="quoteAuthor" class="quote-author"></span>
+    </div>
+
+    <!-- Add Task Input -->
+    <div id="inputArea">
+      <div class="input-wrapper">
+        <input type="text" id="taskInput" placeholder="输入任务，回车添加..." autocomplete="off" spellcheck="false">
+        <div class="priority-selector" id="prioritySelector">
+          <button class="priority-btn active" data-priority="normal" title="普通">🟢</button>
+          <button class="priority-btn" data-priority="important" title="重要">🟡</button>
+          <button class="priority-btn" data-priority="urgent" title="紧急">🔴</button>
+        </div>
+      </div>
+      <!-- Tags -->
+      <div class="tag-bar" id="tagBar">
+        <button class="tag-chip active" data-tag="">全部</button>
+        <button class="tag-chip" data-tag="需求">需求</button>
+        <button class="tag-chip" data-tag="会议">会议</button>
+        <button class="tag-chip" data-tag="想法">💡想法</button>
+        <button class="tag-chip" data-tag="Bug">🐛Bug</button>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div id="taskList">
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">🎮</div>
+        <div class="empty-text">还没有任务</div>
+        <div class="empty-sub">输入任务开始你的冒险吧！</div>
+      </div>
+    </div>
+
+    <!-- Achievement Toast -->
+    <div id="achievementToast" class="achievement-toast hidden">
+      <span class="achievement-icon">🏆</span>
+      <span class="achievement-text" id="achievementText">成就解锁！</span>
+    </div>
+
+    <!-- Level Up Overlay -->
+    <div id="levelUpOverlay" class="level-up-overlay hidden">
+      <div class="level-up-content">
+        <div class="level-up-stars">✨</div>
+        <div class="level-up-title">LEVEL UP!</div>
+        <div class="level-up-level" id="levelUpLevel">Lv.2</div>
+      </div>
+    </div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+  </div>
+
+  <script src="quotes.js"></script>
+  <script src="pomodoro.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

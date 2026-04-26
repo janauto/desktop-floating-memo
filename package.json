@@ -1,0 +1,27 @@
+{
+  "name": "desktop-floating-memo",
+  "version": "1.0.0",
+  "description": "桌面浮窗备忘录 - 游戏化任务管理",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8",
+    "electron-rebuild": "^3.2.9"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "electron-store": "^8.1.0"
+  },
+  "build": {
+    "appId": "com.memo.floating",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": "dmg"
+    }
+  }
+}
