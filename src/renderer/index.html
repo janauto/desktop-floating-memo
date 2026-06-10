@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
   <title>浮窗备忘录</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
   <div id="app">
@@ -102,7 +103,7 @@
         </div>
         <div class="pomo-session-info">
           <div class="pomo-sessions" id="pomoSessions">
-            <span class="pomo-dot completed"></span>
+            <span class="pomo-dot"></span>
             <span class="pomo-dot"></span>
             <span class="pomo-dot"></span>
             <span class="pomo-dot"></span>
@@ -128,24 +129,12 @@
           <button class="priority-btn" data-priority="urgent" title="紧急">🔴</button>
         </div>
       </div>
-      <!-- Tags -->
-      <div class="tag-bar" id="tagBar">
-        <button class="tag-chip active" data-tag="">全部</button>
-        <button class="tag-chip" data-tag="需求">需求</button>
-        <button class="tag-chip" data-tag="会议">会议</button>
-        <button class="tag-chip" data-tag="想法">💡想法</button>
-        <button class="tag-chip" data-tag="Bug">🐛Bug</button>
-      </div>
+      <!-- Tags（运行时按设置动态渲染） -->
+      <div class="tag-bar" id="tagBar"></div>
     </div>
 
     <!-- Task List -->
-    <div id="taskList">
-      <div id="emptyState" class="empty-state">
-        <div class="empty-icon">🎮</div>
-        <div class="empty-text">还没有任务</div>
-        <div class="empty-sub">输入任务开始你的冒险吧！</div>
-      </div>
-    </div>
+    <div id="taskList"></div>
 
     <!-- Achievement Toast -->
     <div id="achievementToast" class="achievement-toast hidden">
@@ -166,8 +155,6 @@
     <canvas id="particleCanvas"></canvas>
   </div>
 
-  <script src="quotes.js"></script>
-  <script src="pomodoro.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="./src/main-window/index.ts"></script>
 </body>
 </html>

@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
   <title>控制中心</title>
-  <link rel="stylesheet" href="settings.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/settings.css">
 </head>
 <body>
   <div id="settingsApp">
@@ -43,12 +44,9 @@
       </nav>
 
       <!-- Content Area -->
-      <div class="content-area" id="contentArea">
-        <!-- Pages will be rendered dynamically by settings.js -->
-      </div>
+      <div class="content-area" id="contentArea"></div>
     </div>
   </div>
-  <script src="quotes.js"></script>
-  <script src="settings.js"></script>
+  <script type="module" src="./src/settings/index.ts"></script>
 </body>
 </html>

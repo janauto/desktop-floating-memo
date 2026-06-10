@@ -1,4 +1,10 @@
-const QUOTES = [
+/** 效率语录库 — 与 v1 内容一致 */
+export interface Quote {
+  text: string
+  author: string
+}
+
+export const QUOTES: Quote[] = [
   { text: "时间就是金钱。", author: "本杰明·富兰克林" },
   { text: "效率是做好工作的灵魂。", author: "切斯特菲尔德" },
   { text: "不要等待完美的时机，拿起你有的时间，让它变得完美。", author: "不详" },
@@ -101,18 +107,14 @@ const QUOTES = [
   { text: "选择比努力更重要。", author: "不详" },
 ];
 
-let lastIndex = -1;
+let lastIndex = -1
 
-function getRandomQuote() {
-  let idx;
+/** 随机取一条语录，避免与上一条重复 */
+export function getRandomQuote(): Quote {
+  let idx: number
   do {
-    idx = Math.floor(Math.random() * QUOTES.length);
-  } while (idx === lastIndex && QUOTES.length > 1);
-  lastIndex = idx;
-  return QUOTES[idx];
-}
-
-// Export for use in settings page
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { QUOTES, getRandomQuote };
+    idx = Math.floor(Math.random() * QUOTES.length)
+  } while (idx === lastIndex && QUOTES.length > 1)
+  lastIndex = idx
+  return QUOTES[idx]
 }
