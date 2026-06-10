@@ -22,3 +22,4 @@ mac:
   # hardenedRuntime: true
   # notarize: true
 npmRebuild: true
+buildDependenciesFromSource: true
